@@ -24,6 +24,13 @@ export default makeStyles((theme) =>
         },
         errorMessage:{
             color:"red"
+        },
+        eyeSymbol:{
+            float:"right",
+        },
+        passwordDiv:{
+            display:"flex",
+            
         }
     })
 );

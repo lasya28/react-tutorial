@@ -1,8 +1,12 @@
 import {object, string} from "yup";
 
 export const initialValues = {
+    name:'',
     username: '',
+    email:'',
+    mobileNumber:'',
     password: '',
+    confirmPassword:''
 
 };
 
@@ -11,18 +15,26 @@ export const formSchema = object({
         .required("Name is required"),
     username: string("Enter username")
         .required("Username is required"),
-    // mobileNumber: string("Enter Mobile Number")
-    // .required("Mobile Number is required"),
     email: string("Enter email")
         .required("Email is required"),
+    // mobileNumber: string("Enter Mobile Number")
+    //     .required("mo"),
     // password: string("Enter password")
-    //     .required("Password is required"),
+    //     .required("p"),
     // confirmPassword: string("Enter confirm password")
-    //     .required("Confirm Password is required")
+    //     .required("cp")
 });
 
-export const isValidMobileNumber=(mobileNumber)=>{
-    if (mobileNumber.length!==0 && mobileNumber.length !==10) return "Please Enter Valid Mobile Number";
+export const isValidMobileNumber=(mobileNumber,isValid)=>{
+    //if(mobileNumber.length===0) return("Enter number");
+    console.log("Passed"+isValid);
+    if (mobileNumber.length!==0 && mobileNumber.length !==10) {
+        isValid=false;
+        console.log("updated"+isValid);
+        return "Please Enter Valid Mobile Number"
+    };
+
+    isValid=true;
     return null;
     
 }
