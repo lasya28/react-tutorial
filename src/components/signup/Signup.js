@@ -1,22 +1,20 @@
-import React, { useEffect,useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {Button} from "@material-ui/core";
-import {Form, Formik} from "formik";
+import { Form, Formik} from "formik";
 import {FormikTextField} from "../formik";
 import styles from "./styles/signupStyles";
 import PropTypes from "prop-types";
-import { formSchema ,initialValues,isPasswordAndConfirmPasswordMatching,isValidMobileNumber,isValidPassword} from './services/signupFormService';
+import { formSchema ,initialValues, validateConfirmPassword} from './services/signupFormService';
 import useSignUp from './hooks/useSignUp';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 
-const Signup=(location, history,isAuthenticated, onSignUp)=>{
+const Signup=(props)=>{
+    const {location, history,isAuthenticated, onSignUp}=props;
     const classes = styles();
-    const [mobileNumber, setmobileNumber] = useState("");
-    const [password,setPassword]=useState("");
-    const [passwordShown, setPasswordShown] = useState(false);
-    const [confirmPassword,setConfirmPassword]=useState("");
     const {from} = location.state || {from: {pathname: "/login"}};
+    const[passwordShown,setPasswordShown]=useState(false);
     const {errorMessage, handleSignUp} = useSignUp(onSignUp);
   
     
@@ -39,6 +37,7 @@ const Signup=(location, history,isAuthenticated, onSignUp)=>{
                                 isValid,
                             } = props;
                             return (
+                               
                                 <Form className={classes.signUpForm}>
                                     <FormikTextField
                                         required
@@ -58,49 +57,30 @@ const Signup=(location, history,isAuthenticated, onSignUp)=>{
                                         name="email"
                                         label="Email"
                                     />
-                                      <FormikTextField
+                                    <FormikTextField
                                         required   
-                                        value={mobileNumber}
                                         margin="dense"
                                         name="mobileNumber"
                                         label="Mobile Number"
-                                        onChange={(e) => {
-                                            setmobileNumber(e.target.value); 
-                                        }           
-                                   }
-                                    />
-                                    {mobileNumber}
-                                    {props.status}
-                                    {isValidMobileNumber(mobileNumber,isValid) && <div className={classes.errorMessage}>{isValidMobileNumber(mobileNumber,isValid)}</div>}
-                                    {/* <div className='classes.passwordDiv'> */}
+                                   />
                                     <FormikTextField
                                        required
-                                       value={password}
+                                       type={passwordShown ? "text" : "password"}
                                        margin="dense"
                                        name="password"
-                                       type={passwordShown ? "text" : "password"}
                                        label="Password"
-                                       onChange={(e)=>{
-                                           setPassword(e.target.value);
-                                       }}  
-                                       
                                    />   
-                                    {/* <div className={classes.eyeSymbol} onClick={togglePassword}><VisibilityOffIcon/></div>  */}
-                                   {/* </div> */}
-        
-                                    {isValidPassword(password) && <p className={classes.errorMessage}>{isValidPassword(password)}</p>}
-                                     <FormikTextField
+                                   <i className={classes.eyeIcon} onClick={togglePassword}><VisibilityOffIcon/></i>
+    
+                                    <FormikTextField
                                         required
-                                        value={confirmPassword}
                                         type="password"
                                         margin="dense"
                                         name="confirmPassword"
                                         label="Confirm Password"
-                                        onChange={(e)=>{
-                                            setConfirmPassword(e.target.value);
-                                        }}
                                     /> 
-                                    {isPasswordAndConfirmPasswordMatching(password,confirmPassword) && <p className={classes.errorMessage}>{isPasswordAndConfirmPasswordMatching(password,confirmPassword)}</p>}
+                                    <i className={classes.eyeIcon} onClick={togglePassword}><VisibilityOffIcon/></i>
+                                    {validateConfirmPassword(props.values) && <p className={classes.errorMessage}>{validateConfirmPassword(props.values)}</p>}
                                     {
                                     errorMessage()
                                     }

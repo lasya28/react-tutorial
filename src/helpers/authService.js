@@ -24,6 +24,19 @@ export const login = async (username, password) => {
     return userDetails;
 }
 
+export const signup = async (name,username,email,mobileNumber, password,confirmPassword) => {
+    const token = authBasicSignup(name,username,email,mobileNumber, password,confirmPassword);
+    const config = {
+        headers: {
+            Authorization: 'Basic ' + token
+        }
+    };
+    const response = await axios.get(`${urls.service}/customer/add`, config);
+    const customerDetails = response.data;
+    localStorage.setItem(tokenKey, token)
+    return customerDetails;
+}
+
 export const isLoggedIn = () => {
     return localStorage.getItem(tokenKey) !== null;
 }
@@ -35,3 +48,7 @@ export const logout = () => {
 const authBasic = (username, password) => {
     return window.btoa(username + ':' + password);
 }
+const authBasicSignup = (name,username,email,mobileNumber, password,confirmPassword) => {
+    return window.btoa(name+':'+username + ':' +email+':'+mobileNumber+':'+ password+':'+confirmPassword);
+}
+

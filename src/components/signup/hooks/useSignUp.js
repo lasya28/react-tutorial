@@ -20,8 +20,10 @@ export default (onSignUp) => {
         const {name,username,email,mobileNumber, password,confirmPassword} = values;
         try {
             await onSignUp(name,username,email,mobileNumber, password,confirmPassword);
+            
             setShowError(false);
         } catch (err) {
+            console.log(err);
             if (err.response && err.response.status === 401) {
                 setShowError(true);
             } else {

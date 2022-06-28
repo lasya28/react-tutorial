@@ -13,7 +13,8 @@ import Signup from "../signup/Signup.js"
 
 const RootRouter = ({isAuthenticated, onLogin,onSignUp}) => {
     const todayDate = moment().format("YYYY-MM-DD");
-
+    console.log("onlogin",onLogin);
+    console.log("onsignup",onSignUp);
     return (
         <Router>
             <Switch>
@@ -43,7 +44,8 @@ const RootRouter = ({isAuthenticated, onLogin,onSignUp}) => {
 
 RootRouter.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    onLogin: PropTypes.func.isRequired
+    onLogin: PropTypes.func.isRequired,
+    onSignUp:PropTypes.func.isRequired,
 };
 
 export default RootRouter;
