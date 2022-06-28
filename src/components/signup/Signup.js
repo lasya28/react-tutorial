@@ -6,7 +6,9 @@ import styles from "./styles/signupStyles";
 import PropTypes from "prop-types";
 import { formSchema ,initialValues, validateConfirmPassword} from './services/signupFormService';
 import useSignUp from './hooks/useSignUp';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import {InputAdornment, IconButton } from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 
 
@@ -14,8 +16,10 @@ const Signup=(props)=>{
     const {location, history,isAuthenticated, onSignUp}=props;
     const classes = styles();
     const {from} = location.state || {from: {pathname: "/login"}};
-    const[passwordShown,setPasswordShown]=useState(false);
     const {errorMessage, handleSignUp} = useSignUp(onSignUp);
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+
   
     
     useEffect(() => {
@@ -23,9 +27,6 @@ const Signup=(props)=>{
             history.replace(from);
         }
     });
-    const togglePassword = () => {
-        setPasswordShown(!passwordShown);
-      };
         return (
             <div className={classes.signUpContainer}>
                 <Formik initialValues={initialValues}
@@ -63,23 +64,45 @@ const Signup=(props)=>{
                                         name="mobileNumber"
                                         label="Mobile Number"
                                    />
-                                    <FormikTextField
+                                  
+                                  <FormikTextField
+                                     label='Password'
+                                     type={showPassword ? "text" : "password"}
                                        required
-                                       type={passwordShown ? "text" : "password"}
                                        margin="dense"
                                        name="password"
-                                       label="Password"
-                                   />   
-                                   <i className={classes.eyeIcon} onClick={togglePassword}><VisibilityOffIcon/></i>
+                                       InputProps={{
+                                        endAdornment: (
+                                          <InputAdornment position="end">
+                                            <IconButton
+                                              onClick={handleClickShowPassword}
+                                            >
+                                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                          </InputAdornment>
+                                        )
+                                      }}
+                                      />
+                                  
     
-                                    <FormikTextField
-                                        required
-                                        type="password"
-                                        margin="dense"
-                                        name="confirmPassword"
-                                        label="Confirm Password"
-                                    /> 
-                                    <i className={classes.eyeIcon} onClick={togglePassword}><VisibilityOffIcon/></i>
+                                  <FormikTextField
+                                     label='Confirm Password'
+                                     type={showPassword ? "text" : "password"}
+                                       required
+                                       margin="dense"
+                                       name="confirmPassword"
+                                       InputProps={{
+                                        endAdornment: (
+                                          <InputAdornment position="end">
+                                            <IconButton
+                                              onClick={handleClickShowPassword}
+                                            >
+                                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                          </InputAdornment>
+                                        )
+                                      }}
+                                      />
                                     {validateConfirmPassword(props.values) && <p className={classes.errorMessage}>{validateConfirmPassword(props.values)}</p>}
                                     {
                                     errorMessage()

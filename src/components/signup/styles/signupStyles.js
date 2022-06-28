@@ -30,7 +30,8 @@ export default makeStyles((theme) =>
         },
         passwordDiv:{
             display:"flex",
-            
-        }
+
+        },
+        
     })
 );

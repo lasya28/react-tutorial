@@ -13,8 +13,6 @@ import Signup from "../signup/Signup.js"
 
 const RootRouter = ({isAuthenticated, onLogin,onSignUp}) => {
     const todayDate = moment().format("YYYY-MM-DD");
-    console.log("onlogin",onLogin);
-    console.log("onsignup",onSignUp);
     return (
         <Router>
             <Switch>
