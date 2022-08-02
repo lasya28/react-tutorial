@@ -57,6 +57,7 @@ const Login = ({location, history, isAuthenticated, onLogin}) => {
                                 </Button>
                                 <span className={classes.signUpLink}>New to Skyfox?
                                 <a href="/signup">Signup here</a></span>
+                                 
                                 
                             </Form>
                         );

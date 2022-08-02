@@ -7,6 +7,8 @@ import {INR_SYMBOL} from "../../Constants";
 const ShowsRevenue = ({showsRevenue, showsRevenueLoading}) => {
     const classes = styles();
 
+    //const getUsers = axios.get("http://localhost:8000/getUser")
+
     return (
         <>
             {
